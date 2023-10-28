@@ -1,0 +1,70 @@
+﻿#include <Servo.h>
+
+Servo servo;  // Create a servo object
+int trigPin = 9;  // Trigger pin of ultrasonic sensor
+int echoPin = 10;  // Echo pin of ultrasonic sensor
+int motorPin1 = 5;  // Motor control pin 1
+int motorPin2 = 6;  // Motor control pin 2
+
+void setup() {
+  servo.attach(3);  // Attach servo to pin 3
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(motorPin1, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
+}
+
+void loop() {
+  // Move the car forward
+  moveForward();
+  
+  // Check if the car is approaching an obstacle
+  if (isObstacleDetected()) {
+    stopCar();
+    
+    // Rotate the servo to check for a parking space
+    servo.write(90);  // Adjust the angle as needed
+    
+    // Check if a parking space is available
+    if (isParkingSpaceAvailable()) {
+      // Park the car
+      parkCar();
+    } else {
+      // No parking space available, go back and try again
+      moveBackward();
+      delay(1000);
+    }
+  }
+}
+
+void moveForward() {
+  digitalWrite(motorPin1, HIGH);
+  digitalWrite(motorPin2, LOW);
+  // Add code to control the motors here
+}
+
+void moveBackward() {
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, HIGH);
+  // Add code to control the motors here
+}
+
+void stopCar() {
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, LOW);
+  // Add code to stop the motors here
+}
+
+bool isObstacleDetected() {
+  // Add code to check the distance from the ultrasonic sensor
+  // If an obstacle is detected, return true; otherwise, return false
+}
+
+bool isParkingSpaceAvailable() {
+  // Add code to check if a parking space is available
+  // If available, return true; otherwise, return false
+}
+
+void parkCar() {
+  // Add code to park the car in the parking space
+}
